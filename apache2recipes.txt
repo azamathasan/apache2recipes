@@ -1,0 +1,32 @@
+***Add alias***
+Example: we need bind /home/user/myproject/ to he URL http://localhost/myproject/
+  1. Create /home/user/myproject/
+  2. sudo chown -R user:www-data regform
+  3. Add after
+      DocmentRoot /var/www/html
+     next line
+      Alias /myproject /home/user/myproject
+     in the file /etc/apache2/sites-enabled/000-default.conf
+  4. In the /etc/apache2/apache2.conf we can see:
+        <Directory /var/www/>
+                Options Indexes FollowSymLinks
+                AllowOverride None
+                Require all granted
+        </Directory>
+    We need add:
+        <Directory /var/www/>
+                Require all granted
+        </Directory>
+    because we don't need forbidden-error on browser
+  5. systemctl reload apache2
+  
+  
+  
+  
+***Add new host***
+  1. Copy /etc/apache2/sites-available/000-default.conf to /etc/apache2/sites-available/example.com.conf
+  2. Write configs to example.com.conf
+  3. For disable url
+      sudo a2dissite 000-default.conf
+     For enable url
+      sudo a2ensite example.com
